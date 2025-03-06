@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>My Bookings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #FFDD00;
+            --primary-white: #FFFFFF;
+            --light-gray: #CCCCCC;
+            --medium-gray: #999999;
+            --dark-gray: #666666;
+        }
+
+        body {
+            background-color: var(--light-gray);
+        }
+
+        .navbar {
+            background-color: var(--dark-gray) !important;
+            padding: 1rem 2rem;
+        }
+
+        .navbar-brand {
+            color: var(--primary-yellow) !important;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--primary-white) !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-yellow) !important;
+        }
+
+        .table-container {
+            background-color: var(--primary-white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid var(--primary-yellow);
+        }
+
+        .custom-table {
+            margin-top: 1rem;
+        }
+
+        .custom-table thead {
+            background-color: var(--dark-gray);
+            color: var(--primary-white);
+        }
+
+        .custom-table th {
+            padding: 1rem;
+            font-weight: 500;
+        }
+
+        .custom-table td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .btn-edit {
+            background-color: var(--primary-yellow);
+            color: var(--dark-gray);
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            background-color: #E5C700;
+            transform: translateY(-2px);
+        }
+
+        .table-row {
+            transition: all 0.3s ease;
+        }
+
+        .table-row:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .footer-link {
+		    color: var(--primary-yellow);
+		    text-decoration: none;
+		    font-weight: 500;
+		    transition: all 0.3s ease;
+		}
+
+		.footer-link:hover {
+		    color: var(--dark-gray);
+		    transform: translateY(-2px);
+		    text-decoration: none;
+		}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">Flight Booking</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="form">Book Flight</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/readAll">My Bookings</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container table-container">
+        <h2 class="text-center mb-4" style="color: var(--dark-gray)">My Flight Bookings</h2>
+        <div class="table-responsive">
+            <table class="table custom-table">
+                <thead>
+                    <tr>
+                        <th>Flight Code</th>
+                        <th>Aircraft</th>
+                        <th>Price</th>
+                        <th>Adults</th>
+                        <th>Children</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="prenotazione:${prenotazioni}" class="table-row">
+                        <td th:text="${prenotazione.codice_volo}"/>
+                        <td th:text="${prenotazione.nomeAereo}"/>
+                        <td th:text="${prenotazione.prezzoBiglietto}"/>
+                        <td th:text="${prenotazione.nAdulti}"/>
+                        <td th:text="${prenotazione.nBambini}"/>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a th:href="@{/edit(id=${prenotazione.id})}" class="me-2">
+                                    <button class="btn btn-edit">Edit</button>
+                                </a>
+                                <a th:href="@{/delete(id=${prenotazione.id})}">
+                                    <button class="btn btn-remove">Delete</button>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="text-center py-4">
+    <a href="https://www.linkedin.com/in/antonio-simonetti-it/" 
+       target="_blank" 
+       class="footer-link">
+        Created by Totino
+    </a>
+	</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
