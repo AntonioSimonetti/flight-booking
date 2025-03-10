@@ -50,6 +50,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
+            	.requestMatchers("/images/**").permitAll()
                 .requestMatchers("/", "/welcome", "/login", "/register", "/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
             )
