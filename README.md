@@ -64,3 +64,11 @@ The application includes an automatic initialization service that runs on first 
 - **ADMIN**: Full system access and management capabilities
 - **USER**: Standard booking functionalities
 - Role-based access control through Spring Security
+
+![Image](https://github.com/user-attachments/assets/ca09cb27-ff67-409d-b981-0e3796d7a9bb)
+
+![Image](https://github.com/user-attachments/assets/b12f98d7-76a0-4717-bd6a-d7ecfe77b5d8)
+
+![Image](https://github.com/user-attachments/assets/f18321d0-4446-4980-996f-aee1314aaaf5)
+
+![Image](https://github.com/user-attachments/assets/cad10c66-e420-47f1-adba-64e50b8608f3)
