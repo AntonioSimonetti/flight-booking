@@ -8,12 +8,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.airlinebooking.flightbooking.model.Prenotazione;
 import com.airlinebooking.flightbooking.model.Utente;
 import com.airlinebooking.flightbooking.repository.IRepoPrenotazione;
 import com.airlinebooking.flightbooking.repository.IRepoUtente;
+import com.airlinebooking.flightbooking.validation.PrenotazioneValidator;
+
+import jakarta.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +33,28 @@ public class GestorePrenotazioni {
     @Autowired
     IRepoUtente repoUtente;
     
+    @Autowired
+    private PrenotazioneValidator prenotazioneValidator;
+    
+    @GetMapping("/form")
+    public String showForm(Model model) {
+        model.addAttribute("prenotazione", new Prenotazione());
+        return "form";
+    }
+    
     @PostMapping("/upsert")
-    public String upsert(@ModelAttribute Prenotazione prenotazione, Model model) {
-        logger.info("Richiesta di upsert ricevuta.");
+    public String upsert(@Valid @ModelAttribute Prenotazione prenotazione,
+    					BindingResult result, 
+    					Model model) {
+        
+    	logger.info("Richiesta di upsert ricevuta.");
+    	
+    	 prenotazioneValidator.validate(prenotazione, result);
+         
+         if (result.hasErrors()) {
+             logger.warn("Validazione fallita: {}", result.getAllErrors());
+             return "form";
+         }
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
             .getAuthentication().getPrincipal();
